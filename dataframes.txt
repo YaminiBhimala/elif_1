@@ -1,0 +1,64 @@
+# Product			
+# p_id	p_name  	p_price  	m_code
+# 1	    Nano	    155000  	100
+# 2	    Indica	    75000	    100
+# 3	    Bajaj Auto	29000	    101
+# 4	    Pulsar	    78000	    101 
+# 5	    T Truck	    450000	    100
+# 6	    E Pulsar	100000	    101
+# 7	    Sumo	    120000	    100
+# 8	    Pulsar++	155000	    101
+
+
+# manufacturers	
+# m_code	name
+# 100	    TATA
+# 101	    BAJAJ
+# 102	    SAMSUNG
+
+# Queries to explore:							
+# 1.Display product name which costs more than 200000							
+# 2.product name which costs more than 100000 and product name begins with N or P							
+# 3.Find product names which has the price between 100000 and 300000							
+# 4.Find all the product names which is costlier than Indica							
+# 5.We want to see the price of Sumo							
+# 6.Find all the products where name starts with B or P and price between 30000 and 90000	
+# 7.Find the manufacturer who does not have any products										 										
+# 8.Display manufacturer name, p_name and its price, consider only the highest priced product in each manufacturer										
+# 9.What are the products which are having the same price from both TATA and BAJAJ manufacturer										
+# 10.If we do an inner join between manufacturer and product, how many records we get as an answer?										
+# 11.If we do a left outer join (left table is manufacturer), how many records we get an an answer?										
+# 12.Show the manufacturer and number of products we have. 										
+
+
+#select p_name ,p_price from product where p_price> 2000000
+
+import pandas as pd
+df = pd.DataFrame({'p_id':[1,2,3,4,5,6,7,8],'p_name':['nano','indica','bajaj','pulsar','t truck','e pulsar','sumo','pulsar++'],'p_price':[155000,75000,29000,78000,450000,100000,120000,155000],'m_code': [100,100,101,101,100,101,100,101]})
+df
+#1.
+df[['p_name', 'p_price']][(df['p_price'] > 200000)]		
+
+#2.select p_name from product where p_price > 100000 and p_name like ('%N', '%P')
+
+df[['p_name','p_price']][(df['p_price']> 100000) & (df['p_name'] == 'n') | (df['p_name'] == 'p')]
+
+df['p_name'][(df['p_name'] == 'n') | (df['p_name'] == 'p')]
+
+#3.select p_name from product where p_price between 100000 and 300000;
+
+df['p_name'][(df['p_price'] > 100000) & (df['p_price'] < 300000)]
+
+#5. select i_price from item where i_name ='sumo';
+df['p_price'][(df['p_name'] == 'sumo')]
+
+
+#4.selec p_name from product where p_price > (select p_price from product where p_name = 'indica')
+df[['p_name','p_price']][df['p_name'] > 'indica']
+
+
+df1 = pd.DataFrame({'m_code': [100,101,102],'name':['TATA','BAJAJ','SAMSUNG']})
+df1
+
+#select m_code from manufacturer where name= 'BAJAJ';
+df[['p_name','m_code']][(df['p_name'] == 'bajaj')]
