@@ -12,6 +12,4 @@ else:
    print ('working ....')
    print ('wish you success in career ')
 
-print ('thank you for executing this if ...else code ... ')
-
-
+print ('thank you for executing this if ...else code does not exit ... ')
